@@ -1,0 +1,23 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing_whitespace
+      - id: end-of-filer-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+      - id: check-merge-conflict
+  - repo: https://github.com/checkmake/checkmake.git
+    # Or another commit hash or version
+    rev: 0.2.2
+    hooks:
+      # Use this hook to let pre-commit build checkmake in its sandbox
+      - id: checkmake
+    # OR Use this hook to use a pre-installed checkmake executable
+    # -   id: checkmake-system
+  - repo: https://github.com/AleksaC/terraform-py
+    rev: v1.15.9
+    hooks:
+      - id: tf-fmt
+      - id: tf-validate
+  - repo: 
