@@ -1,4 +1,4 @@
-# IaC — Mastère 4A - Version BRANCHE 2
+# IaC — Mastère 4A - Fusion réussie (Branche 1 + Branche 2)
 
 Exercices pratiques Infrastructure as Code pour le Mastère Cybersécurité, 4ème année. Ce dépôt réunit tous les travaux pratiques sur 5 jours couvrant Git, Terraform et Ansible.
 
