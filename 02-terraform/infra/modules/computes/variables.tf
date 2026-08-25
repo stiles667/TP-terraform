@@ -61,4 +61,3 @@ variable "sg_ids" {
   description = "A list of security group IDs to associate with the instance."
 
 }
-

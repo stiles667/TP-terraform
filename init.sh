@@ -22,9 +22,9 @@ touch main.tf variables.tf versions.tf \
     outputs.tf providers.tf dev.auto.tfvars
 cd - > /dev/null
 
-mkdir -p infra/modules/compute 
+mkdir -p infra/modules/compute
 mkdir -p infra/modules/security_group
 
-for f in infra/modules/compute infra/modules/security_group; do 
+for f in infra/modules/compute infra/modules/security_group; do
     touch "$f"/main.tf "$f"/variables.tf "$f"/versions.tf "$f"/outputs.tf
 done
