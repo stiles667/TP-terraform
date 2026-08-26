@@ -45,8 +45,15 @@ variable "public_subnet_cidr" {
   default     = "10.0.1.0/24"
 }
 
-variable "allowed_ssh_cidr" {
-  type        = string
-  description = "CIDR block allowed to connect to SSH. Restrict this in real deployments."
-  default     = "0.0.0.0/0"
+variable "allowed_ssh_cidrs" {
+  type        = list(string)
+  description = "Trusted CIDR blocks permitted to use SSH. Keep empty to deny SSH by default."
+  default     = []
+
+  validation {
+    condition = alltrue([
+      for cidr in var.allowed_ssh_cidrs : can(cidrhost(cidr, 0))
+    ])
+    error_message = "Each allowed_ssh_cidrs value must be a valid IPv4 or IPv6 CIDR block."
+  }
 }

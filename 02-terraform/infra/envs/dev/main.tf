@@ -64,30 +64,13 @@ resource "aws_route_table_association" "public" {
   subnet_id      = aws_subnet.public.id
 }
 
-resource "aws_security_group" "ssh" {
-  name        = "${var.username}-${var.environment}-ssh"
-  description = "Allow SSH access to the development instance"
-  vpc_id      = aws_vpc.this.id
+module "security_groups" {
+  source = "../../modules/computes/security-groups"
 
-  ingress {
-    description = "SSH"
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = [var.allowed_ssh_cidr]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  tags = {
-    Name        = "${var.username}-${var.environment}-ssh-sg"
-    Environment = var.environment
-  }
+  username          = var.username
+  environment       = var.environment
+  vpc_id            = aws_vpc.this.id
+  allowed_ssh_cidrs = var.allowed_ssh_cidrs
 }
 
 module "compute" {
@@ -100,5 +83,5 @@ module "compute" {
   instance_ami  = data.aws_ami.amazon_linux.id
   instance_type = var.instance_type
   subnet_id     = aws_subnet.public.id
-  sg_ids        = [aws_security_group.ssh.id]
+  sg_ids        = [module.security_groups.id]
 }

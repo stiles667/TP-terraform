@@ -1,5 +1,5 @@
 # Copy this file to terraform.tfvars and replace the public key.
 public_key = "ssh-ed25519 AAAA... votre-cle-publique"
 
-# Restrict this to your IP in production, for example: 203.0.113.10/32
-allowed_ssh_cidr = "0.0.0.0/0"
+# Restrict this to your IP in production, for example: ["203.0.113.10/32"]
+allowed_ssh_cidrs = []
