@@ -1,5 +1,7 @@
 INFRA_DIR := infra
-.PHONY: tf.init tf.validate tf.plan tf.apply tf.fmt.ci tf.fmt
+VENV_PYTHON := $(CURDIR)/../.venv/Scripts/python.exe
+CHECKOV_SCRIPT := $(CURDIR)/../.venv/Scripts/checkov
+.PHONY: tf.init tf.init.liu tf.validate tf.plan tf.apply tf.fmt.ci tf.fmt tf.lint
 
 tf.validate:
 	@terraform -chdir=$(TF_ENV_DIR) validate
@@ -15,3 +17,10 @@ tf.fmt:
 
 tf.fmt.ci:
 	@terraform fmt -recursive -check $(INFRA_DIR)
+
+tf.lint:
+	@$(VENV_PYTHON) $(CHECKOV_SCRIPT) -d $(INFRA_DIR)
+	@trivy config $(INFRA_DIR)
+
+tf.init.liu:
+	@terraform -chdir=$(TF_ENV_DIR) init -lock=false -input=false -upgrade

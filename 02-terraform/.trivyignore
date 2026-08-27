@@ -1,0 +1,2 @@
+# Public EC2 lab requires outbound web access for package updates.
+AVD-AWS-0104

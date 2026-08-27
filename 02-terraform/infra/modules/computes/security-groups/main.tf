@@ -38,9 +38,21 @@ resource "aws_vpc_security_group_ingress_rule" "ssh" {
 }
 
 # Defined explicitly so outbound access is intentional and visible in code.
-resource "aws_vpc_security_group_egress_rule" "all" {
+resource "aws_vpc_security_group_egress_rule" "http" {
   security_group_id = aws_security_group.this.id
-  description       = "Allow all outbound traffic"
+  description       = "Allow outbound HTTP"
   cidr_ipv4         = "0.0.0.0/0"
-  ip_protocol       = "-1"
+  from_port         = 80
+  ip_protocol       = "tcp"
+  to_port           = 80
 }
+
+resource "aws_vpc_security_group_egress_rule" "https" {
+  security_group_id = aws_security_group.this.id
+  description       = "Allow outbound HTTPS"
+  cidr_ipv4         = "0.0.0.0/0"
+  from_port         = 443
+  ip_protocol       = "tcp"
+  to_port           = 443
+}
+

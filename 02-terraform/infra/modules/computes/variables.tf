@@ -25,7 +25,7 @@ variable "environment" {
   type        = string
   description = "The environment for the instance (e.g., dev, staging, prod)."
   validation {
-    condition     = regex("^[a-z]+$", var.environment)
+    condition     = can(regex("^[a-z]+$", var.environment))
     error_message = "Environment must only contain lowercase letters."
   }
   validation {

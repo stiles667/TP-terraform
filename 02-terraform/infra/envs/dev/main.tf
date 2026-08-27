@@ -1,17 +1,14 @@
-data "aws_ami" "amazon_linux" {
+data "aws_ami" "ubuntu" {
   most_recent = true
-  owners      = ["amazon"]
 
   filter {
     name   = "name"
-    values = ["al2023-ami-*-x86_64"]
+    values = ["ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-*"]
   }
 
-  filter {
-    name   = "state"
-    values = ["available"]
-  }
+  owners = ["099720109477"] # Canonical
 }
+
 
 resource "aws_vpc" "this" {
   cidr_block           = var.vpc_cidr
@@ -28,7 +25,7 @@ resource "aws_subnet" "public" {
   vpc_id                  = aws_vpc.this.id
   cidr_block              = var.public_subnet_cidr
   availability_zone       = "${var.aws_region}a"
-  map_public_ip_on_launch = true
+  map_public_ip_on_launch = false
 
   tags = {
     Name        = "${var.username}-${var.environment}-public-subnet"
@@ -78,9 +75,9 @@ module "compute" {
 
   username      = var.username
   environment   = var.environment
-  public_key    = var.public_key
+  public_key    = file(pathexpand("~/.ssh/tp-terraform-dev-ed25519.pub"))
   has_public_ip = true
-  instance_ami  = data.aws_ami.amazon_linux.id
+  instance_ami  = data.aws_ami.ubuntu.id
   instance_type = var.instance_type
   subnet_id     = aws_subnet.public.id
   sg_ids        = [module.security_groups.id]

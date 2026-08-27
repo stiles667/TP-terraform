@@ -20,4 +20,3 @@ repos:
     hooks:
       - id: tf-fmt
       - id: tf-validate
-  - repo:

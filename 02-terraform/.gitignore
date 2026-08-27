@@ -3,6 +3,7 @@
 *.env
 .terraform
 *.tfstate
+*.tfstate.backup
 *tfstates*
 tfplan
 *tfplan*

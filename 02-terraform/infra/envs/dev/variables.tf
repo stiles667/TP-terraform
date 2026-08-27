@@ -21,12 +21,6 @@ variable "environment" {
   }
 }
 
-variable "public_key" {
-  type        = string
-  description = "SSH public key installed on the EC2 instance."
-  sensitive   = true
-}
-
 variable "instance_type" {
   type        = string
   description = "EC2 instance type."
@@ -56,4 +50,10 @@ variable "allowed_ssh_cidrs" {
     ])
     error_message = "Each allowed_ssh_cidrs value must be a valid IPv4 or IPv6 CIDR block."
   }
+}
+
+variable "admin_ip" {
+  type        = string
+  description = "Your public IP address for SSH access."
+  default     = ""
 }

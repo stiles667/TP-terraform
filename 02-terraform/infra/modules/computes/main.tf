@@ -10,6 +10,14 @@ resource "aws_instance" "this" {
   vpc_security_group_ids      = var.sg_ids
   associate_public_ip_address = var.has_public_ip
 
+  metadata_options {
+    http_tokens = "required"
+  }
+
+  root_block_device {
+    encrypted = true
+  }
+
   tags = {
     Name        = "${local.prefix}-instance"
     Environment = var.environment
