@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ nginx_index_title }}</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main class="page-shell">
+    <p class="eyebrow">DEPLOYED WITH ANSIBLE</p>
+    <h1>{{ nginx_index_title }}</h1>
+    <p class="intro">Engine-X sert maintenant cette page depuis une configuration Nginx generee avec Jinja2.</p>
+
+    <section class="counter-panel" aria-labelledby="counter-title">
+      <h2 id="counter-title">Compteur interactif</h2>
+      <p class="counter-value" id="counter-value">0</p>
+      <button type="button" id="counter-button">Incremente le compteur</button>
+    </section>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>

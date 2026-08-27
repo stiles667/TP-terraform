@@ -1,0 +1,28 @@
+---
+- name: Install UFW
+  ansible.builtin.apt:
+    name: ufw
+    state: present
+    update_cache: true
+
+- name: Set UFW default incoming policy
+  ansible.builtin.command: ufw default deny incoming
+  changed_when: false
+
+- name: Set UFW default outgoing policy
+  ansible.builtin.command: ufw default allow outgoing
+  changed_when: false
+
+- name: Allow SSH through UFW
+  ansible.builtin.command: >-
+    ufw allow from {{ ufw_ssh_source }} to any port {{ ufw_ssh_port }} proto tcp
+  changed_when: false
+
+- name: Allow HTTP through UFW
+  ansible.builtin.command: >-
+    ufw allow {{ ufw_http_port }}/tcp
+  changed_when: false
+
+- name: Enable UFW
+  ansible.builtin.command: ufw --force enable
+  changed_when: false

@@ -1,0 +1,8 @@
+---
+- name: Configure the Engine-X web server
+  hosts: web
+  become: true
+  roles:
+    - hardening_ufw
+    - hardening_fail2ban
+    - install_nginx

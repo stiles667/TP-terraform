@@ -1,0 +1,9 @@
+[DEFAULT]
+ignoreip = {{ fail2ban_ignoreip }}
+bantime = {{ fail2ban_sshd_bantime }}
+findtime = {{ fail2ban_sshd_findtime }}
+maxretry = {{ fail2ban_sshd_maxretry }}
+
+[sshd]
+enabled = true
+backend = systemd

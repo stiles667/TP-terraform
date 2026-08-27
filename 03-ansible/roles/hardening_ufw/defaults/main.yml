@@ -1,0 +1,4 @@
+---
+ufw_ssh_source: any
+ufw_ssh_port: 22
+ufw_http_port: 80

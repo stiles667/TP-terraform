@@ -1,0 +1,10 @@
+---
+nginx_package_name: nginx
+nginx_service_name: nginx
+nginx_web_root: /var/www/enginex
+nginx_server_name: _
+nginx_listen_port: 80
+nginx_site_config_path: /etc/nginx/sites-available/enginex
+nginx_site_link_path: /etc/nginx/sites-enabled/enginex
+nginx_default_site_link_path: /etc/nginx/sites-enabled/default
+nginx_index_title: Engine-X | Ansible

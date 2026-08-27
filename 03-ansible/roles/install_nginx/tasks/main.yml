@@ -1,0 +1,74 @@
+---
+- name: Install Engine-X
+  ansible.builtin.apt:
+    name: "{{ nginx_package_name }}"
+    state: present
+    update_cache: true
+
+- name: Ensure Engine-X is enabled and started
+  ansible.builtin.service:
+    name: "{{ nginx_service_name }}"
+    state: started
+    enabled: true
+
+- name: Create the Web root
+  ansible.builtin.file:
+    path: "{{ nginx_web_root }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Deploy the Web page
+  ansible.builtin.copy:
+    src: index.html
+    dest: "{{ nginx_web_root }}/index.html"
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Reload Engine-X
+
+- name: Deploy the stylesheet
+  ansible.builtin.copy:
+    src: styles.css
+    dest: "{{ nginx_web_root }}/styles.css"
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Reload Engine-X
+
+- name: Deploy the JavaScript
+  ansible.builtin.copy:
+    src: app.js
+    dest: "{{ nginx_web_root }}/app.js"
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Reload Engine-X
+
+- name: Deploy the Engine-X virtual host configuration
+  ansible.builtin.template:
+    src: nginx.conf.j2
+    dest: "{{ nginx_site_config_path }}"
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Reload Engine-X
+
+- name: Disable the default site
+  ansible.builtin.file:
+    path: "{{ nginx_default_site_link_path }}"
+    state: absent
+  notify: Reload Engine-X
+
+- name: Enable the Engine-X site
+  ansible.builtin.file:
+    src: "{{ nginx_site_config_path }}"
+    dest: "{{ nginx_site_link_path }}"
+    state: link
+  notify: Reload Engine-X
+
+- name: Validate the complete Engine-X configuration
+  ansible.builtin.command: nginx -t
+  changed_when: false
+  notify: Reload Engine-X
