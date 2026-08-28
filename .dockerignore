@@ -1,0 +1,9 @@
+.git
+.terraform
+**/.terraform
+*.tfstate
+*.tfstate.*
+*.tfvars
+secrets.env
+build
+**/__pycache__

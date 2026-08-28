@@ -1,0 +1,14 @@
+services:
+  ci:
+    build:
+      context: ..
+      dockerfile: CI-CD-proj-final/Dockerfile
+    working_dir: /workspace/CI-CD-proj-final
+    volumes:
+      - ..:/workspace
+      - ${HOME}/.aws:/root/.aws:ro
+      - ${HOME}/.ssh:/root/.ssh:ro
+    environment:
+      AWS_PROFILE: ${AWS_PROFILE:-default}
+      ANSIBLE_SSH_KEY: /root/.ssh/tp-terraform-dev-ed25519
+    command: make ci

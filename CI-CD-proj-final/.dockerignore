@@ -1,0 +1,6 @@
+build/
+.git/
+.terraform/
+*.tfstate
+*.tfvars
+secrets.env
